@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+# Number of arguments passed
+argc=$#
+
+
+if [ $argc -eq 0  ]; then
+	argv=( $(git diff --name-only HEAD) )
+else
+	argv=( $@ )
+fi
+
+for file in "$argv"; do
+	
+	sed -i -e 's/^[[:blank:]]\+$//' $file
+
+	git add $file # stage patched file
+
+done
+
